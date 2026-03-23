@@ -1,0 +1,197 @@
+# 🔥 Java `this` Keyword – Complete Guide
+
+---
+
+## ✅ Basic Facts
+
+* `this` is a **reserved keyword**
+* Refers to the **current object**
+* Used only in **non-static (instance) context**
+4. "Interfaces" → ❌ Cannot use 'this' directly in interface methods
+   (only in implementing class instances)
+
+---
+
+## 🚀 Main Uses of `this`
+
+### 1. Access Instance Variables (Resolve Shadowing)
+
+```java
+class Car {
+    String brand;
+
+    Car(String brand) {
+        this.brand = brand; // instance variable = parameter
+    }
+}
+```
+
+---
+
+### 2. Constructor Chaining
+
+```java
+class Car {
+    String brand;
+
+    Car() {
+        this("Unknown"); // calls parameterized constructor
+    }
+
+    Car(String brand) {
+        this.brand = brand;
+    }
+}
+```
+
+---
+
+### 3. Method Chaining
+
+```java
+class Car {
+    String brand;
+
+    Car setBrand(String brand) {
+        this.brand = brand;
+        return this;
+    }
+}
+
+// Usage
+Car c = new Car().setBrand("BMW");
+```
+
+---
+
+### 4. Pass Current Object
+
+```java
+void compare(Car other) {
+    System.out.println(this.brand + " vs " + other.brand);
+}
+```
+
+---
+
+### 5. Avoid Variable Shadowing
+
+```java
+void setBrand(String brand) {
+    this.brand = brand; // distinguishes instance variable
+}
+```
+
+---
+
+## ❌ Where `this` CANNOT be used
+
+| Context        | Reason           | Example                         |
+| -------------- | ---------------- | ------------------------------- |
+| Static Methods | No object exists | `static void m(){ this.x=10; }` |
+| Static Blocks  | No instance      | `static { this.x=10; }`         |
+
+---
+
+## 🧠 Interview Summary
+
+**Q: What is `this` keyword?**
+
+👉 Reference to current object. Used for:
+
+* Access instance variables
+* Constructor chaining (`this()`)
+* Method chaining (`return this`)
+* Passing current object
+* Resolving shadowing
+
+---
+
+**Q: Where can’t we use `this`?**
+
+👉 In static methods or blocks (no object exists)
+
+---
+
+## ⚠️ Shadowing Problem vs Solution
+
+### ❌ Without `this`
+
+```java
+class CarNoThis {
+    String brand;
+
+    CarNoThis(String brand) {
+        brand = brand; // ❌ shadowing problem
+    }
+
+    void display() {
+        System.out.println("Brand: " + brand);
+    }
+}
+```
+
+---
+
+### ✅ With `this`
+
+```java
+class CarWithThis {
+    String brand;
+
+    CarWithThis(String brand) {
+        this.brand = brand; // ✅ correct assignment
+    }
+
+    void display() {
+        System.out.println("Brand: " + this.brand);
+    }
+}
+```
+
+---
+
+## 💻 Complete Example
+
+```java
+public class CarDemo {
+    public static void main(String[] args) {
+
+        CarNoThis c1 = new CarNoThis("BMW");
+        CarNoThis c2 = new CarNoThis("Audi");
+
+        CarWithThis c3 = new CarWithThis("Mercedes");
+        CarWithThis c4 = new CarWithThis("Rolls Royce");
+
+        System.out.println("WITHOUT this:");
+        c1.display();
+        c2.display();
+
+        System.out.println("\nWITH this:");
+        c3.display();
+        c4.display();
+    }
+}
+```
+
+---
+
+## 📌 Output
+
+```
+WITHOUT this:
+Brand: null
+Brand: null
+
+WITH this:
+Brand: Mercedes
+Brand: Rolls Royce
+```
+
+---
+
+## 🚀 Status
+
+✔ Day 2 Complete
+✔ Practiced with examples
+✔ Ready for interview basics
